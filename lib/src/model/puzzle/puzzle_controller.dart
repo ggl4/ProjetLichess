@@ -94,12 +94,23 @@ class PuzzleController(final PuzzleContext initialContext) extends Notifier<Puzz
 
     final initialPath = UciPath.fromId(_gameTree.children.first.id);
 
+    final prefs = ref.read(puzzlePreferencesProvider);
+    String? blindFen;
+    IList<String>? blindMoves;
+    if (prefs.blindMode){
+      final blind = context.puzzle.createBlindPosition(prefs.blindMoves);
+      blindFen = blind.blindFen;
+      blindMoves = blind.hiddenMoves;
+    }
+
     return PuzzleState(
       puzzle: context.puzzle,
       glicko: context.glicko,
       mode: PuzzleMode.load,
       root: _gameTree.view,
       initialPosition: _gameTree.position,
+      blindFen: blindFen,
+      blindMoves: blindMoves,
       initialPath: initialPath,
       currentPath: UciPath.empty,
       node: _gameTree.view,
@@ -462,6 +473,8 @@ sealed class const PuzzleState._() with _$PuzzleState {
     required Side pov,
     required ViewBranch node,
     required ViewNode root,
+    String? blindFen,
+    IList<String>? blindMoves,
     Move? lastMove,
     PuzzleResult? result,
     PuzzleFeedback? feedback,
@@ -475,7 +488,9 @@ sealed class const PuzzleState._() with _$PuzzleState {
 
   Position get currentPosition => node.position;
 
-  String get fen => node.position.fen;
+  bool get isBlindFrozen => blindFen != null; 
+
+  String get fen => isBlindFrozen ? blindFen! : node.position.fen;
 
   bool get canGoNext => node.children.isNotEmpty;
 

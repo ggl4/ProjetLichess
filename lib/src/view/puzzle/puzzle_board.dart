@@ -72,7 +72,7 @@ class _PuzzleBoardState() extends ConsumerState<PuzzleBoard> {
       variant: Variant.standard,
       position: state.currentPosition,
       playerSide: _playerSide(state),
-      lastMove: state.lastMove,
+      lastMove: state.isBlindFrozen ? null : state.lastMove,
       castlingMethod: boardPreferences.castlingMethod,
       boardHighlights: boardPreferences.boardHighlights,
     );

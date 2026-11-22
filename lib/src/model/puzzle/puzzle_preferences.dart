@@ -50,6 +50,14 @@ class PuzzlePreferences()
     return save(state.copyWith(rated: rated));
   }
 
+  Future<void> setBlindMode(bool blindMode){
+    return save(state.copyWith(blindMode: blindMode));
+  }
+
+  Future<void> setBlindMoves(int blindMoves){
+    return save(state.copyWith(blindMoves: blindMoves.clamp(1, 10)));
+  }
+
   Future<void> setNbOfflinePuzzles(int nbOfflinePuzzles) {
     return save(
       state.copyWith(
@@ -103,6 +111,13 @@ sealed class PuzzlePrefs with _$PuzzlePrefs implements Serializable {
     /// Defaults to `true`.
     @Default(true) bool rated,
 
+    /// If `true`, the puzzles will be showed 3 moves earlier (blind mode)
+    /// Defaults to `false`
+    @Default(false) bool blindMode,
+
+    /// Number of moves (for each player) that is hidden in the blind mode
+    @Default(3) int blindMoves,
+
     /// Number of puzzles to keep downloaded in the offline queue.
     /// Defaults to `100`.
     @Default(100) int nbOfflinePuzzles,
@@ -113,6 +128,8 @@ sealed class PuzzlePrefs with _$PuzzlePrefs implements Serializable {
     difficulty: PuzzleDifficulty.normal,
     autoNext: false,
     rated: true,
+    blindMode: false,
+    blindMoves: 3,
     nbOfflinePuzzles: 100,
   );
 

@@ -1,3 +1,4 @@
+import 'dart:math' show min;
 import 'package:dartchess/dartchess.dart';
 import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -32,6 +33,21 @@ sealed class const Puzzle._() with _$Puzzle {
     }
     return true;
   }
+
+  ///create the new fen for blind mode (nbMoves earlier)
+  ({String? blindFen, IList<String>? hiddenMoves}) createBlindPosition(int nbMoves){
+    final splitPgn = game.pgn.split(' ').toIList();
+    /// make sure we don't delete more moves than the game contains
+    final nbTotalMoves = min(splitPgn.length, nbMoves*2);
+    final keptMoves = splitPgn.sublist(0, splitPgn.length - nbTotalMoves);
+    final hiddenMoves = splitPgn.sublist(splitPgn.length - nbTotalMoves);
+
+    final blindRoot = Root.fromPgnMoves(keptMoves.join(' '));
+    final fen = blindRoot.nodeAt(blindRoot.mainlinePath).position.fen;
+
+    return (blindFen : fen, hiddenMoves : hiddenMoves);
+  }
+
 }
 
 @Freezed(fromJson: true, toJson: true)
