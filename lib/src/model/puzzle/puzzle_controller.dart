@@ -96,11 +96,11 @@ class PuzzleController(final PuzzleContext initialContext) extends Notifier<Puzz
 
     final prefs = ref.read(puzzlePreferencesProvider);
     String? blindFen;
-    IList<String>? blindMoves;
+    IList<String>? hiddenMoves;
     if (prefs.blindMode){
       final blind = context.puzzle.createBlindPosition(prefs.nbBlindMoves);
       blindFen = blind.blindFen;
-      blindMoves = blind.hiddenMoves;
+      hiddenMoves = blind.hiddenMoves;
     }
 
     return PuzzleState(
@@ -110,7 +110,7 @@ class PuzzleController(final PuzzleContext initialContext) extends Notifier<Puzz
       root: _gameTree.view,
       initialPosition: _gameTree.position,
       blindFen: blindFen,
-      blindMoves: blindMoves,
+      hiddenMoves: hiddenMoves,
       initialPath: initialPath,
       currentPath: UciPath.empty,
       node: _gameTree.view,
@@ -474,7 +474,7 @@ sealed class const PuzzleState._() with _$PuzzleState {
     required ViewBranch node,
     required ViewNode root,
     String? blindFen,
-    IList<String>? blindMoves,
+    IList<String>? hiddenMoves,
     Move? lastMove,
     PuzzleResult? result,
     PuzzleFeedback? feedback,

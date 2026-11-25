@@ -800,6 +800,7 @@ class const _PuzzleSettingsScreen(final PuzzleContext initialPuzzleContext) exte
     );
     final rated = ref.watch(puzzlePreferencesProvider.select((value) => value.rated));
     final blindMode = ref.watch(puzzlePreferencesProvider.select((value) => value.blindMode));
+    final nbBlindMoves = ref.watch(puzzlePreferencesProvider.select((value) => value.nbBlindMoves));
     final ctrlProvider = puzzleControllerProvider(initialPuzzleContext);
     final puzzleState = ref.watch(ctrlProvider);
     final difficulty = ref.watch(puzzlePreferencesProvider.select((state) => state.difficulty));
@@ -933,11 +934,25 @@ class const _PuzzleSettingsScreen(final PuzzleContext initialPuzzleContext) exte
                         },
                 ),
               SwitchSettingTile(
-                title: const Text('Mode à l\'aveugle'),
+                title: const Text('Blind mode'),
                 value: blindMode,
                 onChanged: (value) {
                   ref.read(puzzlePreferencesProvider.notifier).setBlindMode(value);
                 },
+              ),
+              ListTile(
+                title: const Text('Number of blind moves'),
+                trailing: Text('$nbBlindMoves'),
+                subtitle: Slider.adaptive(
+                  value: nbBlindMoves.toDouble(),
+                  min: 0,
+                  max: 10,
+                  divisions: 10, // un cran par entier
+                  label: nbBlindMoves.toString(),
+                  onChanged: (value) {
+                    ref.read(puzzlePreferencesProvider.notifier).setNumberBlindMoves(value.round());
+                  },
+                ),
               ),
               ListTile(
                 title: Text(context.l10n.mobileBoardSettings),
