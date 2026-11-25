@@ -54,8 +54,8 @@ class PuzzlePreferences()
     return save(state.copyWith(blindMode: blindMode));
   }
 
-  Future<void> setBlindMoves(int blindMoves){
-    return save(state.copyWith(blindMoves: blindMoves.clamp(1, 10)));
+  Future<void> setNumberBlindMoves(int nbBlindMoves){
+    return save(state.copyWith(nbBlindMoves: nbBlindMoves.clamp(1, 10)));
   }
 
   Future<void> setNbOfflinePuzzles(int nbOfflinePuzzles) {
@@ -116,7 +116,7 @@ sealed class PuzzlePrefs with _$PuzzlePrefs implements Serializable {
     @Default(false) bool blindMode,
 
     /// Number of moves (for each player) that is hidden in the blind mode.
-    @Default(3) int blindMoves,
+    @Default(3) int nbBlindMoves,
 
     /// Number of puzzles to keep downloaded in the offline queue.
     /// Defaults to `100`.
@@ -129,7 +129,7 @@ sealed class PuzzlePrefs with _$PuzzlePrefs implements Serializable {
     autoNext: false,
     rated: true,
     blindMode: false,
-    blindMoves: 3,
+    nbBlindMoves: 3,
     nbOfflinePuzzles: 100,
   );
 

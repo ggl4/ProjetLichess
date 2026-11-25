@@ -98,7 +98,7 @@ class PuzzleController(final PuzzleContext initialContext) extends Notifier<Puzz
     String? blindFen;
     IList<String>? blindMoves;
     if (prefs.blindMode){
-      final blind = context.puzzle.createBlindPosition(prefs.blindMoves);
+      final blind = context.puzzle.createBlindPosition(prefs.nbBlindMoves);
       blindFen = blind.blindFen;
       blindMoves = blind.hiddenMoves;
     }

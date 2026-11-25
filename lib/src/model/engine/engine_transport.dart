@@ -204,7 +204,7 @@ class StockfishTransport._(@override final StockfishSpec spec, final Stockfish _
         });
       // `initial` is what the plugin's deprecated singleton reports after a clean quit; a handle
       // from create() ends as `disposed`. Either way the engine is gone and nothing went wrong.
-      case StockfishState.initial:
+      // case StockfishState.initial:
       case StockfishState.disposed:
         _die(null);
     }
