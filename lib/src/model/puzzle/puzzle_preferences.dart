@@ -111,11 +111,11 @@ sealed class PuzzlePrefs with _$PuzzlePrefs implements Serializable {
     /// Defaults to `true`.
     @Default(true) bool rated,
 
-    /// If `true`, the puzzles will be showed 3 moves earlier (blind mode)
+    /// If `true`, the puzzles will be showed blindMoves moves earlier (blind mode).
     /// Defaults to `false`
     @Default(false) bool blindMode,
 
-    /// Number of moves (for each player) that is hidden in the blind mode
+    /// Number of moves (for each player) that is hidden in the blind mode.
     @Default(3) int blindMoves,
 
     /// Number of puzzles to keep downloaded in the offline queue.

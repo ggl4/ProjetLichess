@@ -799,6 +799,7 @@ class const _PuzzleSettingsScreen(final PuzzleContext initialPuzzleContext) exte
       puzzlePreferencesProvider.select((value) => value.nbOfflinePuzzles),
     );
     final rated = ref.watch(puzzlePreferencesProvider.select((value) => value.rated));
+    final blindMode = ref.watch(puzzlePreferencesProvider.select((value) => value.blindMode));
     final ctrlProvider = puzzleControllerProvider(initialPuzzleContext);
     final puzzleState = ref.watch(ctrlProvider);
     final difficulty = ref.watch(puzzlePreferencesProvider.select((state) => state.difficulty));
@@ -931,6 +932,13 @@ class const _PuzzleSettingsScreen(final PuzzleContext initialPuzzleContext) exte
                           ref.read(puzzlePreferencesProvider.notifier).setRated(value);
                         },
                 ),
+              SwitchSettingTile(
+                title: const Text('Mode à l\'aveugle'),
+                value: blindMode,
+                onChanged: (value) {
+                  ref.read(puzzlePreferencesProvider.notifier).setBlindMode(value);
+                },
+              ),
               ListTile(
                 title: Text(context.l10n.mobileBoardSettings),
                 trailing: const CupertinoListTileChevron(),
